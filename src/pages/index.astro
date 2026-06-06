@@ -1,38 +1,119 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
 import Skills from "../components/Skills.astro";
 import Projects from "../components/Projects.astro";
+import Products from "../components/Products.astro";
 import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
+import QRCode from "../components/QRCode.astro";
 import portfolioData from "../data/portfolio.json";
 
 const { name, lastName, title } = portfolioData.personalInfo;
+const currentYear = new Date().getFullYear();
 ---
 
 <Layout title={`${name} ${lastName} | ${title}`}>
-  <!-- Navigation Header -->
-  <Header />
+  <div class="hub-wrapper">
+    <!-- Main Interactive Card -->
+    <main class="hub-card">
+      <!-- Profile Cover Banner + Avatar Info + Linktree Buttons Stack -->
+      <Hero />
+      
+      <!-- Content Viewport (Only reveals selected section) -->
+      <div class="content-viewport">
+        <!-- Panel: Sobre Mí -->
+        <div class="tab-panel active slide-fade-in" id="panel-about">
+          <About />
+        </div>
 
-  <main>
-    <!-- Hero Section -->
-    <Hero />
+        <!-- Panel: Habilidades -->
+        <div class="tab-panel" id="panel-skills">
+          <Skills />
+        </div>
 
-    <!-- About Section -->
-    <About />
+        <!-- Panel: Proyectos -->
+        <div class="tab-panel" id="panel-projects">
+          <Projects />
+        </div>
 
-    <!-- Skills Section -->
-    <Skills />
+        <!-- Panel: Productos SaaS -->
+        <div class="tab-panel" id="panel-products">
+          <Products />
+        </div>
 
-    <!-- Projects Section -->
-    <Projects />
+        <!-- Panel: Contacto -->
+        <div class="tab-panel" id="panel-contact">
+          <Contact />
+        </div>
 
-    <!-- Contact Section -->
-    <Contact />
-  </main>
+        <!-- Panel: Compartir QR -->
+        <div class="tab-panel" id="panel-share">
+          <QRCode />
+        </div>
+      </div>
+    </main>
 
-  <!-- Footer Section -->
-  <Footer />
+    <!-- Footer centered below the card -->
+    <footer class="hub-footer">
+      <p class="footer-copy">&copy; {currentYear} {name} {lastName}. Todos los derechos reservados.</p>
+    </footer>
+  </div>
 </Layout>
+
+<style>
+  /* Footer styles centered below the card */
+  .hub-footer {
+    margin-top: 2rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+</style>
+
+<script>
+  const setupTabNavigation = () => {
+    const buttons = document.querySelectorAll('.linktree-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+        const targetPanel = document.getElementById(`panel-${targetTab}`);
+        
+        if (!targetPanel || button.classList.contains('active')) return;
+
+        // Deactivate all buttons
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        // Activate clicked button
+        button.classList.add('active');
+
+        // Deactivate all panels
+        panels.forEach(panel => {
+          panel.classList.remove('active', 'slide-fade-in');
+        });
+
+        // Activate target panel with animation
+        targetPanel.classList.add('active', 'slide-fade-in');
+
+        // Smooth scroll to the top of the viewport section to focus attention
+        const viewport = document.querySelector('.content-viewport');
+        if (viewport) {
+          setTimeout(() => {
+            viewport.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      });
+    });
+  };
+
+  // Run on initial page load
+  setupTabNavigation();
+  // Run on Astro page transition swaps
+  document.addEventListener('astro:after-swap', setupTabNavigation);
+</script>

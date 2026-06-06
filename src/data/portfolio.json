@@ -42,6 +42,14 @@
       "id": "sistema-bomberos",
       "title": "Sistema de Bomberos de Chivilcoy",
       "description": "Desarrollo y mantenimiento de un sistema de gestión para los bomberos locales. Incluye nuevas funcionalidades, optimización de procesos y mejoras en la interfaz de usuario.",
+      "longDescription": "Este sistema de gestión centralizado fue diseñado para digitalizar y automatizar los flujos de trabajo del cuartel de bomberos de Chivilcoy. Permite el registro en tiempo real de siniestros, control de asistencia del personal voluntario, administración del inventario de equipamiento y generación automática de reportes para el análisis de tiempos de respuesta en emergencias.",
+      "role": "Desarrollador de Software Principal",
+      "features": [
+        "Control de inventario de herramientas e insumos en tiempo real.",
+        "Módulo de control de asistencia de voluntarios mediante integraciones.",
+        "Generador de estadísticas automatizadas sobre siniestros y despachos.",
+        "Panel interactivo optimizado para respuestas rápidas bajo estrés."
+      ],
       "period": "Jun - Sep 2024",
       "technologies": ["C#", ".NET", "Blazor", "SQL"],
       "image": "/images/projects/bomberos.png",
@@ -54,6 +62,14 @@
       "id": "reserva-salones",
       "title": "Sistema de Reserva de Salones",
       "description": "Diseño y desarrollo de una aplicación web en PHP para la reserva de salones en la Escuela Secundaria Técnica N°1. Incluye interfaz de usuario, desarrollo de funcionalidades y pruebas.",
+      "longDescription": "Aplicación web creada específicamente para resolver los problemas de coordinación y superposición en el uso de espacios comunes (laboratorios, salones de actos, salas de computación) de la Escuela Secundaria Técnica N°1. El sistema ofrece un calendario interactivo visual donde el personal docente puede reservar turnos y los administradores autorizar o rechazar solicitudes al instante.",
+      "role": "Desarrollador Web Full Stack",
+      "features": [
+        "Calendario mensual interactivo con prevención de colisiones horarias.",
+        "Gestión de roles de usuario (Docentes, Administradores, Directivos).",
+        "Notificaciones de confirmación por correo electrónico integradas.",
+        "Historial y registro detallado de reservas de aulas y equipamiento."
+      ],
       "period": "Jun 2023 - Ago 2024",
       "technologies": ["PHP", "MySQL", "JavaScript"],
       "image": "/images/projects/reserva.png",
@@ -66,6 +82,14 @@
       "id": "mantenimiento-pc",
       "title": "Servicio de Mantenimiento de PC",
       "description": "Servicio voluntario de mantenimiento y reparación de computadoras, creación de imágenes para clonación e instalación de software en la Escuela Secundaria Técnica N°1.",
+      "longDescription": "Proyecto de servicio social y técnico en la Escuela Secundaria Técnica N°1. Consistió en la reestructuración completa de los laboratorios de informática mediante el diagnóstico físico de hardware dañado, sustitución de componentes, cableado de redes estructuradas, configuración de software y creación de imágenes personalizadas del sistema operativo para una clonación rápida y restauración automática de terminales de estudiantes.",
+      "role": "Líder de Soporte Técnico y Redes",
+      "features": [
+        "Reparación física y diagnóstico de hardware de más de 40 computadoras.",
+        "Implementación de técnicas de clonación de discos rígidos mediante Clonezilla.",
+        "Diseño e instalación de cableado estructurado para mejorar la conectividad local.",
+        "Instalación de software de supervisión docente en salas de informática."
+      ],
       "period": "2023",
       "technologies": ["Mantenimiento", "Redes", "Software"],
       "image": "/images/projects/mantenimiento.png",
@@ -78,6 +102,14 @@
       "id": "app-blazor",
       "title": "Aplicación Web con Blazor",
       "description": "Desarrollo de una aplicación web con Blazor y .NET para gestión de tareas. Incluye autenticación de usuarios, almacenamiento de datos y diseño responsivo.",
+      "longDescription": "Proyecto personal para explorar e implementar arquitecturas modernas utilizando Blazor WebAssembly y .NET Core Web API. Consiste en una plataforma de gestión de tareas ágiles que implementa tableros Kanban interactivos, asignación de prioridades, seguimiento de plazos por colores y almacenamiento relacional de alta velocidad para las tareas de los usuarios.",
+      "role": "Desarrollador Único (Proyecto de Aprendizaje)",
+      "features": [
+        "Tablero Kanban dinámico con interacción intuitiva.",
+        "Autenticación segura de usuarios mediante JSON Web Tokens (JWT).",
+        "Almacenamiento e historial de actividades persistente en base de datos relacional.",
+        "Diseño responsivo que funciona en dispositivos móviles y de escritorio."
+      ],
       "period": "Proyecto Personal",
       "technologies": ["C#", ".NET", "Blazor"],
       "image": "/images/projects/blazor.png",
@@ -85,6 +117,36 @@
         "demo": "#",
         "github": "https://github.com/Bernard2806"
       }
+    }
+  ],
+  "products": [
+    {
+      "id": "saas-reservas",
+      "title": "BookingHub - Gestión de Turnos y Espacios",
+      "description": "Plataforma SaaS para la administración de reservas horarias en centros educativos, gimnasios y oficinas compartidas.",
+      "price": "$19.99 / mes",
+      "paymentType": "Suscripción Mensual (SaaS)",
+      "features": [
+        "Calendarios auto-administrables por cada cliente.",
+        "Recordatorios automáticos vía WhatsApp y Email.",
+        "Procesamiento integrado de cobros por reservas de turnos.",
+        "Panel analítico de uso de salas o disponibilidad."
+      ],
+      "link": "https://github.com/Bernard2806"
+    },
+    {
+      "id": "tool-backup",
+      "title": "BackupSync - Utilidad de Respaldo Automatizado",
+      "description": "Herramienta ligera desarrollada en .NET para la sincronización automática y segura de bases de datos SQL y directorios locales a la nube.",
+      "price": "$45.00",
+      "paymentType": "Licencia Vitalicia (Pago Único)",
+      "features": [
+        "Compresión ZIP avanzada y encriptación AES-256 de respaldos.",
+        "Soporte directo para SQL Server, MySQL y almacenamiento local.",
+        "Subida automatizada a AWS S3, Google Drive o servidores FTP.",
+        "Sistema integrado de alertas vía Telegram/Discord sobre fallos o éxitos."
+      ],
+      "link": "https://github.com/Bernard2806"
     }
   ]
 }

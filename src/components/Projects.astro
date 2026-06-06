@@ -3,11 +3,6 @@ import portfolioData from "../data/portfolio.json";
 
 const { projects } = portfolioData;
 
-const getCategory = (period: string) => {
-  if (period.toLowerCase().includes('personal')) return 'personal';
-  return 'institutional';
-};
-
 const getTagColorClass = (tech: string) => {
   const t = tech.toLowerCase();
   if (t.includes('c#') || t.includes('.net')) return 'tag-net';
@@ -20,325 +15,257 @@ const getTagColorClass = (tech: string) => {
 };
 ---
 
-<section id="projects" class="section projects-section">
-  <div class="projects-glow-1"></div>
-  <div class="projects-glow-2"></div>
-  
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Mis Proyectos</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <!-- Category Filter Controls -->
-    <div class="filter-controls">
-      <button class="filter-btn active" data-filter="all">Todos</button>
-      <button class="filter-btn" data-filter="institutional">Institucionales / Servicios</button>
-      <button class="filter-btn" data-filter="personal">Personales</button>
-    </div>
-
-    <!-- Projects Grid -->
-    <div class="projects-grid">
-      {projects.map((project) => {
-        const category = getCategory(project.period);
-        return (
-          <div class="project-card-wrapper" data-category={category}>
-            <article class="project-card glass-card">
-              <!-- Project Image with Zoom -->
-              <div class="project-image-container">
-                <img src={project.image} alt={project.title} class="project-image" />
-                <div class="project-overlay">
-                  <span class="project-period"><i class="far fa-calendar-alt"></i> {project.period}</span>
-                </div>
-              </div>
-
-              <!-- Project Description -->
-              <div class="project-details">
-                <h3 class="project-title">{project.title}</h3>
-                <p class="project-description">{project.description}</p>
-                
-                <!-- Technologies list -->
-                <div class="project-tags">
-                  {project.technologies.map((tech) => (
-                    <span class={`tech-tag ${getTagColorClass(tech)}`}>{tech}</span>
-                  ))}
-                </div>
-
-                <!-- Action buttons -->
-                <div class="project-links">
-                  {project.links.github && project.links.github !== "#" && (
-                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" aria-label="Ver Código">
-                      <i class="fab fa-github"></i> Código
-                    </a>
-                  )}
-                  {project.links.demo && project.links.demo !== "#" && (
-                    <a href={project.links.demo} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" aria-label="Ver Demo">
-                      <i class="fas fa-external-link-alt"></i> Demo
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
+<div class="panel-projects">
+  <div class="projects-cv-list">
+    {projects.map((project) => (
+      <div class="project-cv-item" data-project-id={project.id}>
+        <div class="project-cv-header">
+          <div class="project-cv-title-group">
+            <h4 class="project-cv-title">{project.title}</h4>
+            <span class="project-cv-role">{project.role}</span>
           </div>
-        );
-      })}
+          <span class="project-cv-date">{project.period}</span>
+        </div>
+        <p class="project-cv-desc">{project.description}</p>
+        
+        <div class="project-cv-footer">
+          <div class="project-cv-tags">
+            {project.technologies.slice(0, 3).map((tech) => (
+              <span class={`tech-tag ${getTagColorClass(tech)}`}>{tech}</span>
+            ))}
+            {project.technologies.length > 3 && (
+              <span class="tech-tag tag-default">+{project.technologies.length - 3}</span>
+            )}
+          </div>
+          <span class="btn-more">Ver detalles <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- Render modals for each project -->
+{projects.map((project) => (
+  <div class="modal-overlay" id={`modal-${project.id}`}>
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">{project.title}</h3>
+        <button class="modal-close-btn" data-close-target={`modal-${project.id}`} aria-label="Cerrar">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-meta-row">
+          <div class="modal-meta-item">
+            <strong>Rol:</strong> {project.role}
+          </div>
+          <div class="modal-meta-item">
+            <strong>Período:</strong> {project.period}
+          </div>
+        </div>
+
+        <div class="modal-content-section">
+          <h4 class="modal-desc-heading">Descripción del Proyecto</h4>
+          <p class="modal-desc">{project.longDescription || project.description}</p>
+        </div>
+
+        {project.features && project.features.length > 0 && (
+          <div class="modal-content-section">
+            <h4 class="modal-desc-heading">Características Destacadas</h4>
+            <ul class="modal-list">
+              {project.features.map((feature) => (
+                <li>
+                  <i class="fas fa-circle-check"></i>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div class="modal-content-section">
+          <h4 class="modal-desc-heading">Tecnologías</h4>
+          <div class="project-cv-tags">
+            {project.technologies.map((tech) => (
+              <span class={`tech-tag ${getTagColorClass(tech)}`}>{tech}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-close-modal" data-close-target={`modal-${project.id}`}>Cerrar</button>
+        {project.links.github && project.links.github !== "#" && (
+          <a href={project.links.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <i class="fab fa-github"></i> Código
+          </a>
+        )}
+        {project.links.demo && project.links.demo !== "#" && (
+          <a href={project.links.demo} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i class="fas fa-external-link-alt"></i> Demo
+          </a>
+        )}
+      </div>
     </div>
   </div>
-</section>
+))}
 
 <style>
-  .projects-section {
-    background-color: var(--bg-primary);
-    overflow: hidden;
-  }
-
-  .projects-glow-1 {
-    position: absolute;
-    top: 10%;
-    left: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.04) 0%, transparent 80%);
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .projects-glow-2 {
-    position: absolute;
-    bottom: 10%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, transparent 80%);
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .section-title {
-    font-size: 2.25rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .section-line {
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-    margin: 0 auto;
-    border-radius: 2px;
-  }
-
-  /* Filters */
-  .filter-controls {
+  .panel-projects {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 3.5rem;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
+    flex-direction: column;
   }
 
-  .filter-btn {
-    background: var(--bg-secondary);
+  .projects-cv-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .project-cv-item {
+    background-color: var(--bg-card);
     border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.6rem 1.25rem;
-    border-radius: 30px;
-    cursor: pointer;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all var(--transition-speed) ease;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--text-muted);
-    color: var(--text-primary);
-  }
-
-  .filter-btn.active {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
-    color: #ffffff;
-    border-color: transparent;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
-  }
-
-  /* Grid layout */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .project-card-wrapper {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .project-card {
-    padding: 0;
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .project-card:hover {
-    border-color: var(--accent-purple);
-  }
-
-  .project-image-container {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-    background-color: var(--terminal-bg);
-  }
-
-  .project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .project-card:hover .project-image {
-    transform: scale(1.04);
-  }
-
-  .project-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg, rgba(7, 9, 14, 0.8) 0%, rgba(7, 9, 14, 0) 100%);
-    display: flex;
-    align-items: flex-end;
+    border-radius: 8px;
     padding: 1.25rem;
-  }
-
-  .project-period {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #ffffff;
-    background: rgba(15, 23, 42, 0.7);
-    padding: 0.35rem 0.75rem;
-    border-radius: 30px;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .project-details {
-    padding: 2rem;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    gap: 1.25rem;
+    gap: 0.75rem;
   }
 
-  .project-title {
-    font-size: 1.35rem;
+  .project-cv-item:hover {
+    border-color: var(--text-muted);
+    background-color: var(--bg-hover);
+    transform: translateY(-1px);
+  }
+
+  .project-cv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .project-cv-title-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-cv-title {
+    font-size: 1.05rem;
     font-weight: 700;
     color: var(--text-primary);
   }
 
-  .project-description {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    flex-grow: 1;
+  .project-cv-role {
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    font-weight: 600;
   }
 
-  .project-tags {
+  .project-cv-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .project-cv-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .project-cv-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+  }
+
+  .project-cv-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .tech-tag {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 600;
-    padding: 0.25rem 0.6rem;
+    padding: 0.2rem 0.4rem;
     border-radius: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
-  /* Distinct color themes for tags */
-  .tag-net { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.2); }
-  .tag-blazor { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.2); }
-  .tag-php { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
-  .tag-js { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.2); }
-  .tag-sql { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
-  .tag-infra { background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.2); }
-  .tag-default { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.2); }
+  /* Tag styles */
+  .tag-net { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.2); }
+  .tag-blazor { background: rgba(139, 92, 246, 0.1); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.2); }
+  .tag-php { background: rgba(79, 70, 229, 0.1); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); }
+  .tag-js { background: rgba(234, 179, 8, 0.1); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.2); }
+  .tag-sql { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+  .tag-infra { background: rgba(20, 184, 166, 0.1); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.2); }
+  .tag-default { background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.2); }
 
-  .project-links {
+  .btn-more {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-blue);
     display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
+    align-items: center;
+    gap: 0.3rem;
   }
 
-  .btn-sm {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    border-radius: 6px;
-    flex: 1;
+  .btn-more i {
+    transition: transform var(--transition-speed) ease;
   }
 
-  @media (max-width: 768px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-    .project-image-container {
-      height: 180px;
-    }
+  .project-cv-item:hover .btn-more i {
+    transform: translateX(3px);
   }
 </style>
 
 <script>
-  const setupFilters = () => {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card-wrapper');
+  const setupModals = () => {
+    const items = document.querySelectorAll('.project-cv-item');
+    const closeBtns = document.querySelectorAll('.modal-close-btn, .btn-close-modal');
+    const overlays = document.querySelectorAll('.modal-overlay');
 
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // Toggle active class on buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const id = item.getAttribute('data-project-id');
+        const modal = document.getElementById(`modal-${id}`);
+        if (modal) {
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
 
-        const filterValue = button.getAttribute('data-filter');
+    const close = (modal: HTMLElement) => {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    };
 
-        projectCards.forEach(card => {
-          const cardCategory = card.getAttribute('data-category');
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetId = btn.getAttribute('data-close-target');
+        const modal = document.getElementById(targetId || '');
+        if (modal) close(modal);
+      });
+    });
 
-          if (filterValue === 'all' || cardCategory === filterValue) {
-            // Show card
-            (card as HTMLElement).style.display = 'block';
-            setTimeout(() => {
-              (card as HTMLElement).style.opacity = '1';
-              (card as HTMLElement).style.transform = 'scale(1)';
-            }, 10);
-          } else {
-            // Hide card
-            (card as HTMLElement).style.opacity = '0';
-            (card as HTMLElement).style.transform = 'scale(0.95)';
-            setTimeout(() => {
-              (card as HTMLElement).style.display = 'none';
-            }, 300);
-          }
-        });
+    overlays.forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close(overlay as HTMLElement);
       });
     });
   };
 
-  setupFilters();
-  document.addEventListener('astro:after-swap', setupFilters);
+  setupModals();
+  document.addEventListener('astro:after-swap', setupModals);
 </script>
