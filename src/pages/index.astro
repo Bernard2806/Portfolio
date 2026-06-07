@@ -9,6 +9,7 @@ import Ventures from "../components/Ventures.astro";
 import Projects from "../components/Projects.astro";
 import Products from "../components/Products.astro";
 import Contact from "../components/Contact.astro";
+import ProjectModals from "../components/ProjectModals.astro";
 import portfolioData from "../data/portfolio.json";
 
 const { name, lastName, title } = portfolioData.personalInfo;
@@ -170,6 +171,8 @@ const currentYear = new Date().getFullYear();
       <p class="qr-subtitle-minimal">Escaneá para abrir en tu celular</p>
     </div>
   </div>
+  
+  <ProjectModals />
 </Layout>
 
 <style>
