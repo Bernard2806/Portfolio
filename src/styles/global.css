@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap");
 
 :root {
   /* Color Palette (Dark Theme Default) - Forest / Clothing Green */
@@ -15,8 +15,8 @@
   --border-color-hover: rgba(241, 247, 244, 0.18);
   --banner-gradient: linear-gradient(135deg, #14281d 0%, #0a0f0c 100%); /* Deep forest to black-green */
   
-  --font-sans: "Inter", sans-serif;
-  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Pixelify Sans", sans-serif;
+  --font-heading: "Pixelify Sans", sans-serif;
   --font-code: "Fira Code", monospace;
   --transition-speed: 0.25s;
 }
@@ -123,6 +123,7 @@ body {
   font-size: 0.95rem;
   color: var(--text-secondary);
   font-weight: 600;
+  transition: opacity 0.3s ease;
 }
 
 .profile-meta {

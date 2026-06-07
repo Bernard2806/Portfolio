@@ -22,7 +22,7 @@ if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()))
 
 <div class="profile-info">
   <h1 class="profile-name">{name} {lastName}</h1>
-  <p class="profile-title">{title}</p>
+  <p class="profile-title" id="rotating-title">{title}</p>
   <div class="profile-meta">
     <span><i class="fas fa-birthday-cake"></i> {age} años (28/06/2006)</span>
     <span><i class="fas fa-map-marker-alt"></i> {location}</span>
@@ -57,3 +57,140 @@ if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()))
     z-index: 20;
   }
 </style>
+
+<script>
+  const titles = ["Desarrollador de Software", "Desarrollador Web", "Estudiante de Sistemas"];
+  let currentIndex = 0;
+  let intervalId: any = null;
+
+  const startRotation = () => {
+    console.log("[RotatingTitle] Initializing title rotation...");
+    const titleEl = document.getElementById('rotating-title');
+    if (!titleEl) {
+      console.warn("[RotatingTitle] Element 'rotating-title' not found.");
+      return;
+    }
+
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    // Set initial text and ensure element is visible
+    titleEl.textContent = titles[currentIndex];
+    titleEl.style.opacity = '1';
+
+    intervalId = setInterval(() => {
+      currentIndex = (currentIndex + 1) % titles.length;
+      console.log(`[RotatingTitle] Cycling to index ${currentIndex}: ${titles[currentIndex]}`);
+      
+      // Fade out
+      titleEl.style.opacity = '0';
+      
+      setTimeout(() => {
+        titleEl.textContent = titles[currentIndex];
+        // Fade in
+        titleEl.style.opacity = '1';
+      }, 300);
+    }, 3000);
+  };
+
+  const setupBannerColor = () => {
+    const avatarEl = document.querySelector('.profile-avatar-overlay') as HTMLImageElement;
+    const bannerEl = document.querySelector('.card-banner') as HTMLDivElement;
+
+    if (!avatarEl || !bannerEl) return;
+
+    const extractColor = () => {
+      const img = new Image();
+      // Set crossOrigin to anonymous so we can read pixel data from GitHub avatars safely
+      img.crossOrigin = "anonymous";
+      img.src = avatarEl.src;
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+
+          // Downscale to 50x50 to average colors quickly
+          canvas.width = 50;
+          canvas.height = 50;
+          ctx.drawImage(img, 0, 0, 50, 50);
+
+          const imgData = ctx.getImageData(0, 0, 50, 50).data;
+          let r = 0, g = 0, b = 0, count = 0;
+
+          // Sum RGB components of non-transparent pixels
+          for (let i = 0; i < imgData.length; i += 4) {
+            if (imgData[i+3] < 128) continue;
+            r += imgData[i];
+            g += imgData[i+1];
+            b += imgData[i+2];
+            count++;
+          }
+
+          if (count === 0) return;
+
+          r = Math.floor(r / count);
+          g = Math.floor(g / count);
+          b = Math.floor(b / count);
+
+          // RGB to HSL conversion
+          let rNorm = r / 255;
+          let gNorm = g / 255;
+          let bNorm = b / 255;
+          const max = Math.max(rNorm, gNorm, bNorm);
+          const min = Math.min(rNorm, gNorm, bNorm);
+          let h = 0, s = 0, l = (max + min) / 2;
+
+          if (max !== min) {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+              case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+              case gNorm: h = (bNorm - rNorm) / d + 2; break;
+              case bNorm: h = (rNorm - gNorm) / d + 4; break;
+            }
+            h /= 6;
+          }
+
+          const hDeg = Math.round(h * 360);
+          const sPct = Math.round(s * 100);
+          
+          // Generate complementary hue
+          const compH = (hDeg + 180) % 360;
+
+          // Build a premium dark-mode gradient using the extracted and complementary colors
+          // Saturation and lightness are constrained to guarantee a premium dark theme aesthetic
+          const colorStart = `hsl(${hDeg}, ${Math.min(Math.max(sPct, 25), 45)}%, 14%)`;
+          const colorEnd = `hsl(${compH}, ${Math.min(Math.max(sPct, 25), 45)}%, 8%)`;
+
+          // Apply transition to make color change smooth
+          bannerEl.style.transition = 'background 0.5s ease-in-out';
+          bannerEl.style.background = `linear-gradient(135deg, ${colorStart} 0%, ${colorEnd} 100%)`;
+          console.log(`[BannerColor] Extracted dominant Hue: ${hDeg}deg, Complementary Hue: ${compH}deg. Set gradient successfully.`);
+        } catch (e) {
+          console.error("[BannerColor] Canvas color extraction failed (CORS or other issue):", e);
+        }
+      };
+      img.onerror = (e) => {
+        console.warn("[BannerColor] Failed to load image for extraction:", e);
+      };
+    };
+
+    if (avatarEl.complete) {
+      extractColor();
+    } else {
+      avatarEl.addEventListener('load', extractColor);
+    }
+  };
+
+  // Run on load
+  startRotation();
+  setupBannerColor();
+
+  // Run on Astro page transition swaps
+  document.addEventListener('astro:after-swap', () => {
+    startRotation();
+    setupBannerColor();
+  });
+</script>
