@@ -12,6 +12,7 @@ const socialLinks = [
 ---
 
 <div class="panel-socials">
+  <!-- Redes Principales -->
   <div class="socials-grid">
     {socialLinks.map((social) => (
       <a href={social.url} target="_blank" rel="noopener noreferrer" class="social-card">
@@ -21,6 +22,34 @@ const socialLinks = [
         <span class="social-card-name">{social.name}</span>
       </a>
     ))}
+  </div>
+
+  <!-- Separador y Título de Streaming -->
+  <div class="streaming-divider">
+    <span class="divider-line"></span>
+    <h4 class="streaming-title">Streaming (Ocasional)</h4>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- Redes de Streaming -->
+  <div class="socials-grid">
+    <!-- Kick -->
+    <a href="https://kick.com/bernardtw2806" target="_blank" rel="noopener noreferrer" class="social-card kick-card">
+      <div class="social-card-icon kick-icon-container">
+        <svg viewBox="0 0 512 512" fill="currentColor" class="kick-svg">
+          <path d="M37 .036h164.448v113.621h54.71v-56.82h54.731V.036h164.448v170.777h-54.73v56.82h-54.711v56.8h54.71v56.82h54.73V512.03H310.89v-56.82h-54.73v-56.8h-54.711v113.62H37V.036z"/>
+        </svg>
+      </div>
+      <span class="social-card-name">Kick</span>
+    </a>
+
+    <!-- Twitch -->
+    <a href="https://www.twitch.tv/bernardtw2806" target="_blank" rel="noopener noreferrer" class="social-card twitch-card">
+      <div class="social-card-icon twitch-icon-container">
+        <i class="fab fa-twitch"></i>
+      </div>
+      <span class="social-card-name">Twitch</span>
+    </a>
   </div>
 </div>
 
@@ -127,5 +156,56 @@ const socialLinks = [
     border-color: var(--accent-purple);
     color: var(--accent-purple);
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  }
+
+  /* Streaming Divider */
+  .streaming-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem 0;
+    width: 100%;
+  }
+
+  .divider-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--border-color);
+  }
+
+  .streaming-title {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Kick & Twitch specific styles */
+  .kick-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .social-card.kick-card:hover {
+    border-color: rgba(83, 252, 24, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(83, 252, 24, 0.08);
+  }
+  .social-card.kick-card:hover .kick-icon-container {
+    border-color: #53fc18;
+    color: #53fc18;
+    box-shadow: 0 0 12px rgba(83, 252, 24, 0.25);
+  }
+
+  .social-card.twitch-card:hover {
+    border-color: rgba(145, 70, 255, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(145, 70, 255, 0.08);
+  }
+  .social-card.twitch-card:hover .twitch-icon-container {
+    border-color: #a970ff;
+    color: #a970ff;
+    box-shadow: 0 0 12px rgba(145, 70, 255, 0.25);
   }
 </style>

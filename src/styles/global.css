@@ -505,3 +505,9 @@ body {
     gap: 0.5rem;
   }
 }
+
+@media (min-width: 768px) {
+  .btn-call-mobile {
+    display: none !important;
+  }
+}

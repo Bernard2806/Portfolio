@@ -7,7 +7,7 @@ const { email, phone, location } = portfolioData.personalInfo;
 <div class="panel-contact">
   <div class="contact-cv-info">
     <p class="contact-cv-desc">
-      Si tienes una propuesta de trabajo, una consulta sobre mis productos o deseas colaborar en un proyecto, puedes contactarme directamente a través de cualquiera de los siguientes medios:
+      Si quieres charlar, hacerme alguna consulta sobre mis proyectos o simplemente ponerte en contacto, podés escribirme directamente por cualquiera de estos medios:
     </p>
     
     <div class="contact-cv-details">
@@ -28,12 +28,18 @@ const { email, phone, location } = portfolioData.personalInfo;
 
   <div class="contact-wsp-action">
     <a 
-      href="https://wa.me/542346614492?text=Hola%20Bernardo!%20Vengo%20desde%20tu%20portafolio." 
+      href="https://wa.me/542346614492?text=Hola%20Bernardo!%20Vengo%20desde%20tu%20web." 
       target="_blank" 
       rel="noopener noreferrer" 
       class="btn btn-primary btn-submit-cv"
     >
       Contactar por WhatsApp <i class="fab fa-whatsapp"></i>
+    </a>
+    <a 
+      href={`tel:${phone.replace(/\s+/g, '')}`} 
+      class="btn btn-secondary btn-submit-cv btn-call-mobile"
+    >
+      Llamar por Teléfono <i class="fas fa-phone-alt"></i>
     </a>
   </div>
 </div>
@@ -88,7 +94,9 @@ const { email, phone, location } = portfolioData.personalInfo;
     border-top: 1px solid var(--border-color);
     padding-top: 1.5rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
   }
 
   .btn-submit-cv {

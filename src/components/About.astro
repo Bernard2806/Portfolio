@@ -10,24 +10,6 @@ const { paragraphs } = portfolioData.about;
       <p class="bio-text">{paragraph}</p>
     ))}
   </div>
-
-  <div class="cv-highlights">
-    <div class="cv-item">
-      <div class="cv-icon"><i class="fas fa-graduation-cap"></i></div>
-      <div class="cv-details">
-        <h4 class="cv-title">Formación Académica</h4>
-        <p class="cv-desc">Técnico en Informática - Escuela Secundaria Técnica N°1 "Mariano Moreno"</p>
-      </div>
-    </div>
-
-    <div class="cv-item">
-      <div class="cv-icon"><i class="fas fa-bullseye"></i></div>
-      <div class="cv-details">
-        <h4 class="cv-title">Objetivo Profesional</h4>
-        <p class="cv-desc">Aportar soluciones robustas en .NET y PHP, y continuar expandiendo mis habilidades en tecnologías web modernas.</p>
-      </div>
-    </div>
-  </div>
 </div>
 
 <style>
@@ -46,45 +28,5 @@ const { paragraphs } = portfolioData.about;
 
   .bio-text:last-child {
     margin-bottom: 0;
-  }
-
-  .cv-highlights {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 1.5rem;
-  }
-
-  .cv-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .cv-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    background-color: var(--bg-hover);
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.05rem;
-    color: var(--accent-blue);
-    flex-shrink: 0;
-  }
-
-  .cv-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 0.15rem;
-  }
-
-  .cv-desc {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.4;
   }
 </style>

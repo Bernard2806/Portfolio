@@ -1,6 +1,6 @@
 {
   "personalInfo": {
-    "name": "Bernardo",
+    "name": "Bernardo Andrés",
     "lastName": "González Erramuspe",
     "title": "Desarrollador Web",
     "location": "Chivilcoy, Buenos Aires, Argentina",
@@ -8,8 +8,8 @@
     "phone": "+54 2346 614492",
     "github": "https://github.com/Bernard2806",
     "linkedin": "https://www.linkedin.com/in/bernardo-gonzalez-erramuspe/",
-    "instagram": "https://instagram.com/",
-    "facebook": "https://facebook.com/",
+    "instagram": "https://www.instagram.com/bernardo.ge_/",
+    "facebook": "https://www.facebook.com/profile.php?id=61557481925085",
     "avatar": "https://github.com/Bernard2806.png",
     "phrases": [
       "Especializado en desarrollo web",
@@ -20,9 +20,9 @@
   },
   "about": {
     "paragraphs": [
-      "Soy un desarrollador web apasionado, egresado de la Escuela Secundaria Técnica N°1 \"Mariano Moreno\". Mi formación se centra en el desarrollo web, gestión de bases de datos y redes.",
-      "He participado en varios proyectos académicos y servicios prácticos, aplicando tecnologías como .NET, Blazor, PHP y SQL. Mi experiencia incluye el desarrollo de aplicaciones web, mantenimiento de sistemas y optimización de procesos.",
-      "Mi objetivo es seguir creciendo profesionalmente, enfrentando desafíos y aportando soluciones innovadoras en el ámbito tecnológico. Me caracterizo por mi capacidad de aprendizaje continuo y mi compromiso con la calidad del trabajo."
+      "Hola, soy Bernardo.",
+      "Tengo 19 años, estudio Sistemas y me apasiona la tecnología. Me gusta programar, experimentar con Linux, crear proyectos y aprender cosas nuevas todo el tiempo. Soy de los que disfrutan entender cómo funciona algo y después intentar mejorarlo o construir su propia versión.",
+      "Actualmente sigo formándome mientras trabajo en proyectos personales, académicos y comunitarios que me permiten crecer tanto técnica como personalmente."
     ]
   },
   "skills": {

@@ -1,0 +1,118 @@
+---
+const ventures = [
+  { 
+    name: "BookingHub", 
+    description: "Gestión de Turnos y Espacios",
+    url: "https://github.com/Bernard2806", 
+    icon: "fas fa-calendar-check" 
+  },
+  { 
+    name: "BackupSync", 
+    description: "Respaldos Automatizados",
+    url: "https://github.com/Bernard2806", 
+    icon: "fas fa-sync" 
+  }
+];
+---
+
+<div class="panel-ventures">
+  <div class="ventures-grid">
+    {ventures.map((venture) => (
+      <a href={venture.url} target="_blank" rel="noopener noreferrer" class="venture-card">
+        <div class="venture-card-icon">
+          <i class={venture.icon}></i>
+        </div>
+        <div class="venture-card-info">
+          <span class="venture-card-name">{venture.name}</span>
+          <span class="venture-card-desc">{venture.description}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .panel-ventures {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ventures-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .venture-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .venture-card-icon {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    background-color: var(--bg-body);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-speed) ease;
+    color: var(--text-secondary);
+  }
+
+  .venture-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .venture-card-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .venture-card-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  /* Custom Hover Effects matching page palette */
+  .venture-card:hover {
+    background-color: var(--bg-hover);
+    transform: translateY(-3px);
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.08);
+  }
+
+  .venture-card:hover .venture-card-icon {
+    background-color: var(--bg-card);
+    transform: scale(1.05);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+  }
+
+  @media (max-width: 576px) {
+    .ventures-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
