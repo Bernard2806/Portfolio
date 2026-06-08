@@ -50,6 +50,27 @@
     // Colors derived dynamically from CSS variables
     let bubbleColorRGB = '117, 144, 128'; // Default fallback (sage green: #759080)
 
+    // Offscreen canvas for pre-rendering bubble gradient
+    const offscreenCanvas = document.createElement('canvas');
+    const oCtx = offscreenCanvas.getContext('2d');
+    
+    const preRenderBubble = () => {
+      offscreenCanvas.width = 64;
+      offscreenCanvas.height = 64;
+      if (!oCtx) return;
+      oCtx.clearRect(0, 0, 64, 64);
+      
+      const grad = oCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grad.addColorStop(0, `rgba(${bubbleColorRGB}, 0.18)`);
+      grad.addColorStop(0.5, `rgba(${bubbleColorRGB}, 0.08)`);
+      grad.addColorStop(1, `rgba(${bubbleColorRGB}, 0)`);
+      
+      oCtx.fillStyle = grad;
+      oCtx.beginPath();
+      oCtx.arc(32, 32, 32, 0, Math.PI * 2);
+      oCtx.fill();
+    };
+
     const updateColors = () => {
       const tempDiv = document.createElement('div');
       tempDiv.style.color = 'var(--text-muted)';
@@ -88,25 +109,15 @@
       ctx.clearRect(0, 0, width, height);
 
       bubbles.forEach((bubble) => {
-        // Soft glowing particle effect
-        const gradient = ctx.createRadialGradient(
-          bubble.x,
-          bubble.y,
-          0,
-          bubble.x,
-          bubble.y,
-          bubble.radius
+        // Draw using pre-rendered canvas (diameter is bubble.radius * 4 because bubble.radius * 2 is the actual radius)
+        const diameter = bubble.radius * 4;
+        ctx.drawImage(
+          offscreenCanvas,
+          bubble.x - diameter / 2,
+          bubble.y - diameter / 2,
+          diameter,
+          diameter
         );
-
-        // Core of the bubble is slightly more visible, edge fades out
-        gradient.addColorStop(0, `rgba(${bubbleColorRGB}, 0.18)`);
-        gradient.addColorStop(0.5, `rgba(${bubbleColorRGB}, 0.08)`);
-        gradient.addColorStop(1, `rgba(${bubbleColorRGB}, 0)`);
-
-        ctx.beginPath();
-        ctx.arc(bubble.x, bubble.y, bubble.radius * 2, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
 
         // Update positions
         bubble.y -= bubble.speed;
@@ -137,8 +148,20 @@
       initBubbles();
     };
 
+    // Listen for theme mutations to regenerate offscreen bubble color
+    const themeObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'data-theme') {
+          updateColors();
+          preRenderBubble();
+        }
+      });
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
     // Start everything
     updateColors();
+    preRenderBubble();
     initBubbles();
     tick();
 
@@ -147,6 +170,7 @@
     // Cleanup function
     return () => {
       cancelAnimationFrame(animationFrameId);
+      themeObserver.disconnect();
       window.removeEventListener('resize', handleResize);
     };
   };

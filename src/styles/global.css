@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap");
-
 @font-face {
   font-family: "PixelifyCleanNumbers";
   src: local("VT323"), url("https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2hsY.ttf") format("truetype");
@@ -267,7 +265,8 @@ body {
   padding: 0 1.25rem;
   opacity: 0;
   transform: translateY(-8px);
-  transition: padding 0.3s ease, opacity 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .accordion-content.active .accordion-content-inner {
